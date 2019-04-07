@@ -14,36 +14,33 @@
  *  limitations under the License
  */
 
-package com.abc.rflooker.di.component;
+package com.abc.rflooker.data.remote;
 
-import android.app.Application;
-import android.content.Context;
+import com.rx2androidnetworking.Rx2AndroidNetworking;
 
-import com.abc.rflooker.DemoApplication;
-import com.abc.rflooker.di.builder.ActivityBuilder;
-import com.abc.rflooker.di.module.ApplicationModule;
-
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import dagger.BindsInstance;
-import dagger.Component;
-import dagger.android.AndroidInjectionModule;
+import io.reactivex.Single;
 
 /**
  * Created by amitshekhar on 07/07/17.
  */
+
 @Singleton
-@Component(modules = {AndroidInjectionModule.class, ApplicationModule.class, ActivityBuilder.class})
-public interface ApplicationComponent {
+public class AppApiHelper implements ApiHelper {
 
-    void inject(DemoApplication app);
+    @Inject
+    public AppApiHelper() {
+    }
 
-    @Component.Builder
-    interface Builder {
-
-        @BindsInstance
-        Builder application(Application application);
-
-        ApplicationComponent build();
+    @Override
+    public Single<String> doServerLoginApiCall(String email, String password) {
+        return Rx2AndroidNetworking.post(ApiEndPoint.ENDPOINT_LOGIN)
+                //.addHeaders(mApiHeader.getPublicApiHeader())
+                .addQueryParameter("j_username", email)
+                .addQueryParameter("j_password", password)
+                .build()
+                .getObjectSingle(String.class);
     }
 }

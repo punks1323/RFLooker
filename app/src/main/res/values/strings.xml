@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">RFLooker</string>
+    <string name="invalid_email_password">Invalid email id or password</string>
 </resources>

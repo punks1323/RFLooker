@@ -1,37 +1,37 @@
 package com.abc.rflooker;
 
+import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
 
-import com.abc.rflooker.di.component.ApplicationComponent;
 import com.abc.rflooker.di.component.DaggerApplicationComponent;
-import com.abc.rflooker.di.module.ApplicationModule;
-import com.abc.rflooker.storage.DataManager;
+import com.abc.rflooker.utils.AppLogger;
 
 import javax.inject.Inject;
 
-public class DemoApplication extends Application {
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasActivityInjector;
+import timber.log.Timber;
 
-    protected ApplicationComponent applicationComponent;
+public class DemoApplication extends Application implements HasActivityInjector {
 
     @Inject
-    DataManager dataManager;
+    DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
 
-    public static DemoApplication get(Context context) {
-        return (DemoApplication) context.getApplicationContext();
+    @Override
+    public DispatchingAndroidInjector<Activity> activityInjector() {
+        return activityDispatchingAndroidInjector;
     }
+
 
     @Override
     public void onCreate() {
         super.onCreate();
-        applicationComponent = DaggerApplicationComponent
-                .builder()
-                .applicationModule(new ApplicationModule(this))
-                .build();
-        applicationComponent.inject(this);
+        DaggerApplicationComponent.builder()
+                .application(this)
+                .build()
+                .inject(this);
+
+        AppLogger.init();
     }
 
-    public ApplicationComponent getComponent() {
-        return applicationComponent;
-    }
 }

@@ -14,36 +14,28 @@
  *  limitations under the License
  */
 
-package com.abc.rflooker.di.component;
+package com.abc.rflooker.utils;
 
-import android.app.Application;
 import android.content.Context;
-
-import com.abc.rflooker.DemoApplication;
-import com.abc.rflooker.di.builder.ActivityBuilder;
-import com.abc.rflooker.di.module.ApplicationModule;
-
-import javax.inject.Singleton;
-
-import dagger.BindsInstance;
-import dagger.Component;
-import dagger.android.AndroidInjectionModule;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 /**
  * Created by amitshekhar on 07/07/17.
  */
-@Singleton
-@Component(modules = {AndroidInjectionModule.class, ApplicationModule.class, ActivityBuilder.class})
-public interface ApplicationComponent {
 
-    void inject(DemoApplication app);
+public final class NetworkUtils {
 
-    @Component.Builder
-    interface Builder {
+    private NetworkUtils() {
+        // This class is not publicly instantiable
+    }
 
-        @BindsInstance
-        Builder application(Application application);
-
-        ApplicationComponent build();
+    public static boolean isNetworkConnected(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm != null) {
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        }
+        return false;
     }
 }
