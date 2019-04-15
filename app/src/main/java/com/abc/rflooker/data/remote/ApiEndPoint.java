@@ -24,7 +24,7 @@ import com.abc.rflooker.BuildConfig;
 
 public final class ApiEndPoint {
 
-    public static final String ENDPOINT_LOGIN = BuildConfig.BASE_URL + "/5926ce9d11000096006ccb30";
+    public static final String ENDPOINT_LOGIN = BuildConfig.BASE_URL + "/auth/loginCheck";
 
        private ApiEndPoint() {
         // This class is not publicly instantiable

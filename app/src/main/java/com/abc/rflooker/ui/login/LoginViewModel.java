@@ -19,6 +19,7 @@ package com.abc.rflooker.ui.login;
 import android.text.TextUtils;
 
 import com.abc.rflooker.data.DataManager;
+import com.abc.rflooker.data.DataManagerImpl;
 import com.abc.rflooker.ui.base.BaseViewModel;
 import com.abc.rflooker.utils.AppLogger;
 import com.abc.rflooker.utils.CommonUtils;
@@ -50,9 +51,9 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
 
     public void login(String email, String password) {
         setIsLoading(true);
-
+//getDataManager().
         getCompositeDisposable().add(
-                getDataManager().login(email, password)
+                getDataManager().doServerLogin(email, password)
                         .doOnSuccess(response -> AppLogger.i("Login response :: " + response))
                         .subscribeOn(getSchedulerProvider().io())
                         .observeOn(getSchedulerProvider().ui())
@@ -69,7 +70,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                         .updateUserInfo(
                                 response.getAccessToken(),
                                 response.getUserId(),
-                                DataManager.LoggedInMode.LOGGED_IN_MODE_SERVER,
+                                DataManagerImpl.LoggedInMode.LOGGED_IN_MODE_SERVER,
                                 response.getUserName(),
                                 response.getUserEmail(),
                                 response.getGoogleProfilePicUrl()))

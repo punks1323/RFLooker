@@ -16,6 +16,7 @@
 
 package com.abc.rflooker.data.remote;
 
+import com.androidnetworking.common.Priority;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 
 import javax.inject.Inject;
@@ -28,19 +29,21 @@ import io.reactivex.Single;
  */
 
 @Singleton
-public class AppApiHelper implements ApiHelper {
+public class ApiHelperImpl implements ApiHelper {
 
     @Inject
-    public AppApiHelper() {
+    public ApiHelperImpl() {
     }
 
     @Override
-    public Single<String> doServerLoginApiCall(String email, String password) {
+    public Single<String> doServerLogin(String email, String password) {
         return Rx2AndroidNetworking.post(ApiEndPoint.ENDPOINT_LOGIN)
-                //.addHeaders(mApiHeader.getPublicApiHeader())
-                .addQueryParameter("j_username", email)
-                .addQueryParameter("j_password", password)
+                .addBodyParameter("emailId", email)
+                .addBodyParameter("password", password)
+                .setTag("login")
+                .setPriority(Priority.MEDIUM)
                 .build()
-                .getObjectSingle(String.class);
+                .getStringSingle();
+        //.getObjectSingle(String.class);
     }
 }

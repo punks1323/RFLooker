@@ -17,6 +17,7 @@
 package com.abc.rflooker.ui.base;
 
 import com.abc.rflooker.data.DataManager;
+import com.abc.rflooker.data.DataManagerImpl;
 import com.abc.rflooker.utils.rx.SchedulerProvider;
 
 import java.lang.ref.WeakReference;

@@ -1,5 +1,6 @@
 package com.abc.rflooker.ui.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -8,6 +9,7 @@ import com.abc.rflooker.R;
 import com.abc.rflooker.ViewModelProviderFactory;
 import com.abc.rflooker.databinding.ActivityLoginBinding;
 import com.abc.rflooker.ui.base.BaseActivity;
+import com.abc.rflooker.ui.main.MainActivity;
 import com.abc.rflooker.utils.AppLogger;
 
 import javax.inject.Inject;
@@ -66,6 +68,9 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     @Override
     public void openMainActivity() {
         AppLogger.i("openMainActivity");
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+
     }
 
     @Override

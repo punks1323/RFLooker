@@ -17,9 +17,8 @@
 package com.abc.rflooker.di.component;
 
 import android.app.Application;
-import android.content.Context;
 
-import com.abc.rflooker.DemoApplication;
+import com.abc.rflooker.RFLookerApplication;
 import com.abc.rflooker.di.builder.ActivityBuilder;
 import com.abc.rflooker.di.module.ApplicationModule;
 
@@ -36,7 +35,7 @@ import dagger.android.AndroidInjectionModule;
 @Component(modules = {AndroidInjectionModule.class, ApplicationModule.class, ActivityBuilder.class})
 public interface ApplicationComponent {
 
-    void inject(DemoApplication app);
+    void inject(RFLookerApplication app);
 
     @Component.Builder
     interface Builder {

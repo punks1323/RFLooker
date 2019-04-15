@@ -25,7 +25,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-import com.abc.rflooker.ui.dashboard.MainActivity;
+import com.abc.rflooker.ui.main.MainActivity;
+import com.abc.rflooker.utils.AppLogger;
 import com.abc.rflooker.utils.CommonUtils;
 import com.abc.rflooker.utils.NetworkUtils;
 
@@ -120,8 +121,9 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     }
 
     public void openActivityOnTokenExpire() {
-        startActivity(MainActivity.newIntent(this));
-        finish();
+        /*startActivity(MainActivity.newIntent(this));
+        finish();*/
+        AppLogger.w("Token expired");
     }
 
     public void performDependencyInjection() {

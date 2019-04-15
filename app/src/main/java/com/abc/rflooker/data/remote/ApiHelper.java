@@ -24,5 +24,5 @@ import io.reactivex.Single;
 
 public interface ApiHelper {
 
-    Single<String> doServerLoginApiCall(String email, String password);
+    Single<String> doServerLogin(String email, String password);
 }

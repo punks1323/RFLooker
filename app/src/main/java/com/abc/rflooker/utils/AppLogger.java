@@ -17,7 +17,10 @@
 package com.abc.rflooker.utils;
 
 import com.abc.rflooker.BuildConfig;
+import com.abc.rflooker.RFLookerApplication;
+import com.androidnetworking.AndroidNetworking;
 
+import okhttp3.OkHttpClient;
 import timber.log.Timber;
 
 /**
@@ -54,10 +57,12 @@ public final class AppLogger {
         Timber.i(throwable, s, objects);
     }
 
-    public static void init() {
+    public static void init(RFLookerApplication rfLookerApplication, OkHttpClient okHttpClient) {
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
+
+        AndroidNetworking.initialize(rfLookerApplication, okHttpClient);
     }
 
     public static void w(String s, Object... objects) {
