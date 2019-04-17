@@ -26,6 +26,8 @@ public interface LoginNavigator {
 
     void register();
 
+    void showSnackMsg(String msg);
+
     void handleError(Throwable throwable);
 
     void openMainActivity(boolean isFirstTimeLogin);

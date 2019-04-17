@@ -7,7 +7,11 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name=".RFLookerApplication"
@@ -34,6 +38,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.main.MainActivity" />
+
+        <service
+            android:name=".background.FileTreeJob"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 
 </manifest>

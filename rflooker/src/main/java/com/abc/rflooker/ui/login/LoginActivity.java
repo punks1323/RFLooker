@@ -14,6 +14,7 @@ import com.abc.rflooker.databinding.ActivityLoginBinding;
 import com.abc.rflooker.ui.base.BaseActivity;
 import com.abc.rflooker.ui.main.MainActivity;
 import com.abc.rflooker.utils.AppLogger;
+import com.google.android.material.snackbar.Snackbar;
 
 import javax.inject.Inject;
 
@@ -52,8 +53,6 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Override
     public void login() {
-        //loginViewDataBinding.emailEt.setText("punks1323@gmail.com");
-        //loginViewDataBinding.passwordEt.setText("12345678");
         String email = loginViewDataBinding.emailEt.getText().toString();
         String password = loginViewDataBinding.passwordEt.getText().toString();
 
@@ -71,6 +70,13 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     }
 
     @Override
+    public void showSnackMsg(String msg) {
+        Snackbar snackbar = Snackbar
+                .make(getViewDataBinding().loginParent, msg, Snackbar.LENGTH_SHORT);
+        snackbar.show();
+    }
+
+    @Override
     public void openMainActivity(boolean isFirstTimeLogin) {
         AppLogger.i("Login Success :: ");
         Intent mStartActivity = new Intent(this, MainActivity.class);
@@ -79,11 +85,11 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
             /**
              * Relaunch app
              */
-            int mPendingIntentId = 123456;
+            /*int mPendingIntentId = 123456;
             PendingIntent mPendingIntent = PendingIntent.getActivity(this, mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
             AlarmManager mgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
-            System.exit(0);
+            mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);*/
+            finish();
         } else {
             startActivity(mStartActivity);
         }

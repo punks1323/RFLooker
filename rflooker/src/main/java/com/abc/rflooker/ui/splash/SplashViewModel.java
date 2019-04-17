@@ -16,6 +16,7 @@
 
 package com.abc.rflooker.ui.splash;
 
+import com.abc.rflooker.data.DataManager;
 import com.abc.rflooker.data.DataManagerImpl;
 import com.abc.rflooker.ui.base.BaseViewModel;
 import com.abc.rflooker.utils.AppLogger;
@@ -29,8 +30,8 @@ import com.google.gson.Gson;
 
 public class SplashViewModel extends BaseViewModel<SplashNavigator> {
 
-    public SplashViewModel(DataManagerImpl dataManagerImpl, SchedulerProvider schedulerProvider) {
-        super(dataManagerImpl, schedulerProvider);
+    public SplashViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
+        super(dataManager, schedulerProvider);
     }
 
     void startSeeding() {

@@ -19,6 +19,7 @@ import com.abc.rflooker.databinding.ActivitySplashBinding;
 import com.abc.rflooker.ui.base.BaseActivity;
 import com.abc.rflooker.R;
 import com.abc.rflooker.ui.login.LoginActivity;
+import com.abc.rflooker.ui.main.MainActivity;
 import com.abc.rflooker.utils.AppLogger;
 import com.abc.rflooker.utils.DeviceDetails;
 import com.google.android.material.snackbar.Snackbar;
@@ -72,6 +73,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         appNeededPermission.add(Manifest.permission.READ_PHONE_STATE);
+        appNeededPermission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
         runtimePermissionListener = new RuntimePermissionListener() {
             @Override
@@ -127,18 +129,20 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
 
     @Override
     public void openLoginActivity() {
-        AppLogger.i("openLoginActivity: ");
         if (hasPermission(Manifest.permission.READ_PHONE_STATE)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_WIFI_STATE) == PackageManager.PERMISSION_GRANTED) {
                 AppLogger.i(DeviceDetails.getDeviceDetails(this, new Gson()));
             }
         }
         startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 
     @Override
     public void openMainActivity() {
-        AppLogger.i("openMainActivity: ");
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -172,14 +176,14 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
     private boolean allPermissionAllowed() {
         for (String permission : appNeededPermission) {
             if (ActivityCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
-                deniedPermissions.add(Manifest.permission.READ_PHONE_STATE);
+                deniedPermissions.add(permission);
             }
         }
         return deniedPermissions.size() == 0;
     }
 
     private void askPermission() {
-        AppLogger.i("Asking runtime permission from user...");
+        AppLogger.i("Asking runtime permission from user..." + deniedPermissions);
         ActivityCompat.requestPermissions(this, deniedPermissions.toArray(new String[deniedPermissions.size()]), REQUEST_PERMISSION_CODE);
     }
 

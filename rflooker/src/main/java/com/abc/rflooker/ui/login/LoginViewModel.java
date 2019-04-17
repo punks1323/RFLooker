@@ -68,23 +68,32 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
     }
 
     public void login(String email, String password) {
+
         setIsLoading(true);
-//getDataManager().
         getCompositeDisposable().add(
                 getDataManager().doServerLogin(email, password)
-                        .doOnSuccess(response -> AppLogger.i("Login response :: " + response))
-                        .doOnError(onError -> AppLogger.e("Login error :: " + onError.toString()))
+                        /*.doOnSuccess(response -> AppLogger.i("Login response :: " + response))
+                        .doOnError(onError -> AppLogger.e("Login error :: " + onError.toString()))*/
                         .subscribeOn(getSchedulerProvider().newThread())
                         .observeOn(getSchedulerProvider().ui())
                         .subscribe(response -> {
                             setIsLoading(false);
+                            getNavigator().showSnackMsg("Login success");
                             boolean isFirstTimeLogin = getDataManager().getUserEmailId() == null;
                             getDataManager().setUserEmailId(email);
                             getDataManager().setUserPassword(password);
+                            getDataManager().setIsUserLoggedIn(true);
                             getNavigator().openMainActivity(isFirstTimeLogin);
                         }, throwable -> {
                             setIsLoading(false);
                             getNavigator().handleError(throwable);
+                            if (throwable instanceof ANError) {
+                                ANError anError = (ANError) throwable;
+                                if (anError.getErrorCode() == 401)
+                                    getNavigator().showSnackMsg("Invalid login");
+                                else
+                                    getNavigator().showSnackMsg("Unknown error");
+                            }
                         }));
         /*getCompositeDisposable().add(getDataManager()
                 .doServerLoginApiCall(new LoginRequest.ServerLoginRequest(email, password))
