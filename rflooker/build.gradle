@@ -5,17 +5,17 @@ android {
     defaultConfig {
         applicationId "com.abc.rflooker"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         debug {
-            buildConfigField("String", "BASE_URL", "\"http://192.168.1.101:8080/RFLooker\"")
+            buildConfigField("String", "BASE_URL", "\"http://192.168.43.152:9000/RFLooker\"")
         }
         release {
-            buildConfigField("String", "BASE_URL", "\"http://192.168.1.101:8080/RFLooker\"")
+            buildConfigField("String", "BASE_URL", "\"http://192.168.43.152:9000/RFLooker\"")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -67,4 +67,9 @@ dependencies {
     //Apache files
     implementation "commons-io:commons-io:$rootProject.apacheCommonsVersion"
 
+    //FCM
+    //implementation "com.google.firebase:firebase-core:$rootProject.fcmVersion"
+    implementation "com.google.firebase:firebase-messaging:$rootProject.fcmVersion"
+
 }
+apply plugin: 'com.google.gms.google-services'

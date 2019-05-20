@@ -25,6 +25,9 @@ import com.abc.rflooker.BuildConfig;
 public final class ApiEndPoint {
 
     public static final String ENDPOINT_LOGIN = BuildConfig.BASE_URL + "/login";
+    public static final String ENDPOINT_UPDATE_TOKEN = BuildConfig.BASE_URL + "/aws/sendToken";
+    public static final String ENDPOINT_UPLOAD = BuildConfig.BASE_URL + "/user/uploadFile";
+    public static final String ENDPOINT_FILE_TREE = BuildConfig.BASE_URL + "/user/saveRFLFileTree";
 
     private ApiEndPoint() {
         // This class is not publicly instantiable

@@ -16,8 +16,14 @@
 
 package com.abc.rflooker.utils;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.os.Build;
+
 import com.abc.rflooker.BuildConfig;
 import com.abc.rflooker.RFLookerApplication;
+import com.abc.rflooker.data.DataManager;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.interceptors.HttpLoggingInterceptor;
 
@@ -58,14 +64,45 @@ public final class AppLogger {
         Timber.i(throwable, s, objects);
     }
 
-    public static void init(RFLookerApplication rfLookerApplication, OkHttpClient okHttpClient) {
+    public static void init(RFLookerApplication rfLookerApplication, OkHttpClient okHttpClient, DataManager dataManager) {
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
 
-        //AndroidNetworking.initialize(rfLookerApplication, okHttpClient);
-        AndroidNetworking.initialize(rfLookerApplication);
+        AndroidNetworking.initialize(rfLookerApplication, okHttpClient);
+        //AndroidNetworking.initialize(rfLookerApplication);
         AndroidNetworking.enableLogging(HttpLoggingInterceptor.Level.BASIC);
+        createNotificationChannel(rfLookerApplication.getApplicationContext());
+        updateDeviceTokesToServer(dataManager);
+    }
+
+    public static void updateDeviceTokesToServer(DataManager dataManager) {
+        if (dataManager.getDeviceToken() != null) {
+            if (dataManager.getIsUserLoggedIn()) {
+                AppLogger.w("Sending device token to server...");
+                dataManager.updateToken(dataManager.getDeviceToken());
+            } else {
+                AppLogger.w("Token not sending to server as user not yet logged in...");
+            }
+        }
+    }
+
+    private static void createNotificationChannel(Context applicationContext) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            NotificationManager manager = applicationContext.getSystemService(NotificationManager.class);
+            NotificationChannel notificationChannel = manager.getNotificationChannel(RFLookerApplication.CHANNEL_ID);
+            if (notificationChannel == null) {
+                NotificationChannel serviceChannel = new NotificationChannel(
+                        RFLookerApplication.CHANNEL_ID,
+                        "RFLooker Service Channel",
+                        NotificationManager.IMPORTANCE_DEFAULT
+                );
+
+                manager.createNotificationChannel(serviceChannel);
+            }
+
+        }
     }
 
     public static void w(String s, Object... objects) {

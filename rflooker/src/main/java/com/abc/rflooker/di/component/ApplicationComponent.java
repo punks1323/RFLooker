@@ -20,6 +20,7 @@ import android.app.Application;
 
 import com.abc.rflooker.RFLookerApplication;
 import com.abc.rflooker.di.builder.ActivityBuilder;
+import com.abc.rflooker.di.builder.ServiceBuilder;
 import com.abc.rflooker.di.module.ApplicationModule;
 
 import javax.inject.Singleton;
@@ -32,10 +33,12 @@ import dagger.android.AndroidInjectionModule;
  * Created by amitshekhar on 07/07/17.
  */
 @Singleton
-@Component(modules = {AndroidInjectionModule.class, ApplicationModule.class, ActivityBuilder.class})
+@Component(modules = {
+        AndroidInjectionModule.class,
+        ApplicationModule.class,
+        ActivityBuilder.class,
+        ServiceBuilder.class})
 public interface ApplicationComponent {
-
-    void inject(RFLookerApplication app);
 
     @Component.Builder
     interface Builder {
@@ -45,4 +48,6 @@ public interface ApplicationComponent {
 
         ApplicationComponent build();
     }
+
+    void inject(RFLookerApplication app);
 }

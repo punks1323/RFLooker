@@ -13,4 +13,9 @@ public interface PrefManager {
     String getUserPassword();
 
     void setUserPassword(String userPassword);
+
+    String getDeviceToken();
+
+    void setDeviceToken(String deviceToken);
+
 }

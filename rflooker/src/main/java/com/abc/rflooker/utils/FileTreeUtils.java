@@ -11,7 +11,7 @@ public class FileTreeUtils {
     public static String getFileTree() {
         String json = null;
 
-        File dir = new File(Environment.getExternalStorageDirectory(), "/RFLooker");
+        File dir = Environment.getExternalStorageDirectory();
 
         if (!dir.exists()) {
             boolean mkdirs = dir.mkdirs();
@@ -40,6 +40,7 @@ public class FileTreeUtils {
             } else {
                 JSONObject dirJSONObject = new JSONObject();
                 dirJSONObject.put("type", "D");
+                dirJSONObject.put("name", name);
                 JSONArray dirJSONArr = new JSONArray();
                 dirJSONObject.put(name, dirJSONArr);
                 fileJSONArray.put(dirJSONObject);

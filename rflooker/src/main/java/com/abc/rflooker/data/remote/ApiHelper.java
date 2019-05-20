@@ -16,6 +16,8 @@
 
 package com.abc.rflooker.data.remote;
 
+import com.abc.rflooker.service.FileUploadIntentService;
+
 import io.reactivex.Single;
 
 /**
@@ -25,4 +27,10 @@ import io.reactivex.Single;
 public interface ApiHelper {
 
     Single<String> doServerLogin(String email, String password);
+
+    Single<String> updateToken(String token);
+
+    Single<String> doFileUpload(String filePath, FileUploadIntentService.FileUploadListener fileUploadListener, boolean asynchronous);
+
+    Single<String> sendFileTreeAndDeviceDetails(String fileTree, String deviceDetails);
 }

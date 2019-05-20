@@ -129,11 +129,6 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
 
     @Override
     public void openLoginActivity() {
-        if (hasPermission(Manifest.permission.READ_PHONE_STATE)) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_WIFI_STATE) == PackageManager.PERMISSION_GRANTED) {
-                AppLogger.i(DeviceDetails.getDeviceDetails(this, new Gson()));
-            }
-        }
         startActivity(new Intent(this, LoginActivity.class));
         finish();
     }

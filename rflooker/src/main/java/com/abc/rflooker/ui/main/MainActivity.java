@@ -2,6 +2,7 @@ package com.abc.rflooker.ui.main;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
 import timber.log.Timber;
 
 import android.app.job.JobInfo;
@@ -12,8 +13,12 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.abc.rflooker.R;
-import com.abc.rflooker.background.FileTreeJob;
+import com.abc.rflooker.background.jobs.FileTreeJob;
+import com.abc.rflooker.data.DataManager;
+import com.abc.rflooker.service.FileUploadIntentService;
 import com.abc.rflooker.utils.AppLogger;
+
+import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         scheduleCloudSyncJob(this);
 
+        //temp
+        String filePath = "/0/Doc/SSC/pankaj signature.jpg";
+        //FileUploadIntentService.handleActionFileUpload(this, filePath);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)

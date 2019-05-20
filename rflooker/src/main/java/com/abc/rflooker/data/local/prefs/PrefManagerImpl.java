@@ -17,6 +17,7 @@ public class PrefManagerImpl implements PrefManager {
     public static final String LOGGED_IN_STATUS = "LOGGED_IN_STATUS";
     public static final String USER_EMAIL_ID = "USER_EMAIL_ID";
     public static final String USER_PASSWORD = "USER_PASSWORD";
+    public static final String DEVICE_TOKEN = "DEVICE_TOKEN";
 
     @Inject
     public PrefManagerImpl(@ApplicationContext Context context, @PreferenceInfo String prefFileName) {
@@ -51,5 +52,15 @@ public class PrefManagerImpl implements PrefManager {
     @Override
     public void setUserPassword(String userPassword) {
         prefs.edit().putString(USER_PASSWORD, userPassword).apply();
+    }
+
+    @Override
+    public String getDeviceToken() {
+        return prefs.getString(DEVICE_TOKEN, null);
+    }
+
+    @Override
+    public void setDeviceToken(String deviceToken) {
+        prefs.edit().putString(DEVICE_TOKEN, deviceToken).apply();
     }
 }

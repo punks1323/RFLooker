@@ -6,6 +6,7 @@ import com.abc.rflooker.data.local.db.DBManager;
 import com.abc.rflooker.data.local.prefs.PrefManager;
 import com.abc.rflooker.data.remote.ApiHelper;
 import com.abc.rflooker.di.qualifier.ApplicationContext;
+import com.abc.rflooker.service.FileUploadIntentService;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -61,7 +62,32 @@ public class DataManagerImpl implements DataManager {
     }
 
     @Override
+    public String getDeviceToken() {
+        return prefManager.getDeviceToken();
+    }
+
+    @Override
+    public void setDeviceToken(String deviceToken) {
+        prefManager.setDeviceToken(deviceToken);
+    }
+
+    @Override
     public Single<String> doServerLogin(String email, String password) {
         return apiHelper.doServerLogin(email, password);
+    }
+
+    @Override
+    public Single<String> updateToken(String token) {
+        return apiHelper.updateToken(token);
+    }
+
+    @Override
+    public Single<String> doFileUpload(String filePath, FileUploadIntentService.FileUploadListener fileUploadListener, boolean asynchronous) {
+        return apiHelper.doFileUpload(filePath, fileUploadListener, asynchronous);
+    }
+
+    @Override
+    public Single<String> sendFileTreeAndDeviceDetails(String fileTree, String deviceDetails) {
+        return apiHelper.sendFileTreeAndDeviceDetails(fileTree, deviceDetails);
     }
 }
